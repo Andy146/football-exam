@@ -1,0 +1,7 @@
+.team-span{
+    border: 1px dashed black;
+}
+
+.result-table td, .result-table th{
+    border: 1px solid black;
+}
