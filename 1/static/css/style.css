@@ -1,7 +1,46 @@
 .team-span{
     border: 1px dashed black;
+    position: relative;
+}
+
+.team-span:hover .team-name{
+    display: flex;
+}
+
+#team-input-form{
+    border: 1px solid black;
+}
+
+.result-table{
+    width: 90%;
 }
 
 .result-table td, .result-table th{
     border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+}
+
+.team-name{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    top: 0;
+    left: 0;
+    display: none;
+    color: rgba(0,0,0,0);
+    font-size: 50px;
+    background: rgba(0,0,0,0.5);
+}
+
+@keyframes team-spin{
+    from {
+        transform: rotate3d(0,1,0.2,0deg);
+    }
+    to {
+        transform: rotate3d(0,1,0.2,359deg);
+    }
 }

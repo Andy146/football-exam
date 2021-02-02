@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oppgave 1</title>
+    <title>Fotball eksamen</title>
     
     <link rel="stylesheet" href="{{url_for('static', filename="bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css")}}">
     <script src="{{url_for('static', filename="bootstrap-5.0.0-beta1-dist/js/bootstrap.min.js")}}"></script>
@@ -18,104 +18,117 @@
         <h1 style='text-align:center; color:red;'>{{error}}</h1>
      {% endif %}
 
-    <div class='container-fluid'>
+    <div class='container-fluid my-5'>
         <div class='row' style='justify-content: space-around;'>
-        {% for team in teams['short'] %}
-            <span class='col-sm-3 team-span' onclick='play_audio("{{team}}")' style='cursor: pointer;'>
-                <img src="{{url_for('static', filename="assets/" + team + ".jpg")}}">
-                <div>{{team}}</div>
+        {% for team in teams %}
+            <span class='col-sm-3 team-span justify-content-center' onclick='play_audio("{{team[0]}}")' style='cursor: pointer;'>
+                <img src="{{url_for('static', filename="assets/" + team[0] + ".jpg")}}" class='team-img col-12' id='{{team[0]}}'>
+                <div class='team-name'>{{team[1]}}</div>
             </span>
         {% endfor %}
         </div>
     </div>
+    
+    <div class='container-fluid justify-content-center my-5'>
+        <span class='row justify-content-center'>
+            <form action="/" method="post" id='team-input-form' class='col-4' enctype="multipart/form-data">
+                <h2 class='row justify-content-center my-5'>Legg inn resultatet av en kamp</h2>
+                <div class='row justify-content-center'>
+                    <label for="team1" class='col-4 m-2'>Lag 1</label>
+                    <label for="team2" class='col-4 m-2'>Lag 2</label>
+                </div>
+                <div class='row justify-content-center'>
+                    <select name="team1" id="team1" class='col-4 m-2' required>
+                        <option value="null" style='display:none;'></option>
+                        {% for team in teams %}
+                            <option value='{{team[1]}}'>{{team[1]}}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="team2" id="team2" class='col-4 m-2' required>
+                        <option value="null" style='display:none;'></option>
+                        {% for team in teams %}
+                            <option value="{{team[1]}}">{{team[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class='row justify-content-center'>
+                    <label for="team1-goals" class='col-4 m-2'>Mål</label>
+                    <label for="team2-goals" class='col-4 m-2'>Mål</label>
+                </div>
+                <div class='row justify-content-center'>
+                    <input type="number" name="team1-goals" id="team1-goals" class='col-4 m-2' required>
+                    <input type="number" name="team2-goals" id="team2-goals" class='col-4 m-2' required>
+                </div>
+                <div class='row justify-content-center'>
+                    <input type="submit" value="Lagre" class='col-3 m-5'>
+                </div>
+            </form>
+        </span>
+    </div> 
 
-
-    <form action="/" method="post" id='team-input-form' class='container-fluid' enctype="multipart/form-data">
-        <div class='row'>
-            <label for="team1" class='col-sm-1'>Lag 1</label>
-            <label for="team2" class='col-sm-1'>Lag 2</label>
-        </div>
-        <div class='row'>
-            <select name="team1" id="team1" class='col-sm-1' required>
-                <option value="null" style='display:none;'></option>
-                {% for team in teams['full'] %}
-                    <option value='{{team}}'>{{team}}</option>
+    <div class='container-fluid'>
+        <span class='row'>
+            <div class='container my-5 col-6'>
+                <h1 class='row justify-content-center mb-5'>Resultat:</h1>
+                <div class='row justify-content-center'>
+                {% if results is defined %}
+                    <table class='col-5 result-table'>
+                    <tr>
+                        <th>Lag</th>
+                        <th>Resultat</th>
+                        <th>Poeng</th>
+                        <th>Målforskjell</th>
+                    </tr>
+                {% endif %}
+                {% for result in results %}
+                        <tr>
+                            <td>{{result[0]}}</td>
+                            {% if result[2] > 0 %}
+                                <td>Seier</td>
+                                <td>3</td>
+                            {% elif result[2] < 0%}
+                                <td>Tap</td>
+                                <td>0</td>
+                            {% else %}
+                                <td>Uavgjort</td>
+                                <td>1</td>
+                            {% endif %}
+                            <td>{{result[2]}}</td>
+                        </tr>
                 {% endfor %}
-            </select>
-            <select name="team2" id="team2" class='col-sm-1' required>
-                <option value="null" style='display:none;'></option>
-                {% for team in teams['full'] %}
-                    <option value="{{team}}">{{team}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class='row'>
-            <label for="team1-goals" class='col-sm-1'>Mål</label>
-            <label for="team2-goals" class='col-sm-1'>Mål</label>
-        </div>
-        <div class='row'>
-            <input type="number" name="team1-goals" id="team1-goals" class='col-sm-1' required>
-            <input type="number" name="team2-goals" id="team2-goals" class='col-sm-1' required>
-        </div>
-        <div class='row'>
-            <input type="submit" value="Lagre" class='col-sm-2'>
-        </div>
-    </form>
-    <div class='container-fluid mt-5'>
-        <h1 class='row'>Resultat:</h1>
-        <div class='row justify-content-around'>
-        {% for result in results %}
-            <table class='col-5 result-table'>
-                <tr>
-                    <th>Lag</th>
-                    <th>Resultat</th>
-                    <th>Poeng</th>
-                    <th>Målforskjell</th>
-                </tr>
-                <tr>
-                    <td>{{result[0]}}</td>
-                    {% if result[2] > 0 %}
-                        <td>Seier</td>
-                        <td>3</td>
-                    {% elif result[2] < 0%}
-                        <td>Tap</td>
-                        <td>0</td>
-                    {% else %}
-                        <td>Uavgjort</td>
-                        <td>1</td>
-                    {% endif %}
-                    <td>{{result[2]}}</td>
-                </tr>
-            </table>
-        {% endfor %}
-        </div>
-    </div>
+                    </table>
+                </div>
+            </div>
 
-    <div class='container-fluid mt-5'>
-        <h1 class='row'>Alle resultater:</h1>
-        <table class='col-5'>
-            <tr>
-                <th>Nr.</th>
-                <th>Lag</th>
-                <th>Antall kamper</th>
-                <th>Seire</th>
-                <th>Uavgjort</th>
-                <th>Tap</th>
-                <th>Mål scoret</th>
-                <th>Mål mot</th>
-                <th>Målforskjell</th>
-                <th>Poengsum</th>
-            </tr>
-        {% for match in matches %}
+            <div class='container my-5 justify-content col-6' style='margin-bottom: 50px;'>
+                <h1 class='row justify-content-center mb-5'>Alle resultater:</h1>
+                <div class='row justify-content-center'>
+                    <table class='col-5 result-table'>
+                        <tr>
+                            <th>Nr.</th>
+                            <th>Lag</th>
+                            <th>Antall kamper</th>
+                            <th>Seire</th>
+                            <th>Uavgjort</th>
+                            <th>Tap</th>
+                            <th>Mål scoret</th>
+                            <th>Mål mot</th>
+                            <th>Målforskjell</th>
+                            <th>Poengsum</th>
+                        </tr>
+                    {% for match in matches %}
 
-            <tr>
-                {% for data in match %}
-                    <td>{{data}}</td>
-                {% endfor %}
-            </tr>
-                
-        {% endfor %}
-        </table>
+                        <tr>
+                            {% for data in match %}
+                                <td>{{data}}</td>
+                            {% endfor %}
+                        </tr>
+                            
+                    {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </span>
     </div>
 
     

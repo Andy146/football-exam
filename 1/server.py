@@ -23,25 +23,23 @@ def home_page():
             [teams[0], points[0], points[0]-points[1], points[0]>points[1]],
             [teams[1], points[1], points[1]-points[0], points[1]>points[0]]
         ]
-        _teams = {
-            "full":['AC Milan', 'AS Roma', 'FC Inter'],
-            'short':['milan', 'roma', 'inter']
-        }
+        
+        teams_list = [['milan', 'AC Milan'], ['roma', 'AS Roma'], ['inter', 'FC Inter']]
         if football.save_match(teams, points) != True:
             _error = football.save_match(teams, points)
-            return flask.render_template('html/home.html', teams=_teams, error=_error, matches=matches)
-
-
-        matches = football.get_matches(_teams)
-        return flask.render_template('html/home.html', teams=_teams, results=results, matches=matches)
-
-    else:
+            return flask.render_template('html/home.html', error=_error, matches=matches, teams=teams_list)
         teams = {
-            "full":['AC Milan', 'AS Roma', 'FC Inter'],
-            'short':['milan', 'roma', 'inter']
+        "full":['AC Milan', 'AS Roma', 'FC Inter'],
+        'short':['milan', 'roma', 'inter']
         }
 
-        return flask.render_template('html/home.html', teams=teams, matches=matches)
+        matches = football.get_matches(teams)
+        return flask.render_template('html/home.html', results=results, matches=matches, teams=teams_list)
+
+    else:
+        teams_list = [['milan', 'AC Milan'], ['roma', 'AS Roma'], ['inter', 'FC Inter']]
+
+        return flask.render_template('html/home.html', teams=teams_list, matches=matches)
 
 if __name__ == '__main__':
     app.run(debug=True)
