@@ -11,3 +11,4 @@ pip3 install flask
 ```
 - Run the server.py file at the root of the project
 - Open the website that will be on http://localhost:5000
+- (Hope that there are no more steps to start on windows, I haven't tested it in windows)
