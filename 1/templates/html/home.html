@@ -14,10 +14,14 @@
 
 </head>
 <body>
+     {% if error is defined %}
+        <h1 style='text-align:center; color:red;'>{{error}}</h1>
+     {% endif %}
+
     <div class='container-fluid'>
         <div class='row' style='justify-content: space-around;'>
         {% for team in teams['short'] %}
-            <span class='col-sm-3 team-span' onclick='play_audio("{{team[]}}")' style='cursor: pointer;'>
+            <span class='col-sm-3 team-span' onclick='play_audio("{{team}}")' style='cursor: pointer;'>
                 <img src="{{url_for('static', filename="assets/" + team + ".jpg")}}">
                 <div>{{team}}</div>
             </span>
@@ -85,9 +89,29 @@
 
     <div class='container-fluid mt-5'>
         <h1 class='row'>Alle resultater:</h1>
-        {% for result in json_results %}
-            {{result}}
+        <table class='col-5'>
+            <tr>
+                <th>Nr.</th>
+                <th>Lag</th>
+                <th>Antall kamper</th>
+                <th>Seire</th>
+                <th>Uavgjort</th>
+                <th>Tap</th>
+                <th>Mål scoret</th>
+                <th>Mål mot</th>
+                <th>Målforskjell</th>
+                <th>Poengsum</th>
+            </tr>
+        {% for match in matches %}
+
+            <tr>
+                {% for data in match %}
+                    <td>{{data}}</td>
+                {% endfor %}
+            </tr>
+                
         {% endfor %}
+        </table>
     </div>
 
     
