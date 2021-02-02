@@ -10,4 +10,4 @@ or
 pip3 install flask
 ```
 - Run the server.py file at the root of the project
-- Open the website that will be on localhost:5000
+- Open the website that will be on http://localhost:5000
