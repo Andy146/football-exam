@@ -15,5 +15,6 @@ pip3 install flask
 
 ## Additional instructions:
 
+- The stored dataset is stored as a csv in the "data" folder, it contains every match (which teams played and how many goals they each scored)
 - If you want to clear the stored dataset, DO NOT delete results.csv 
-- To clear the stored dataset just delete every line except the header, and make sure there is a newline after if (the should be two lines in the file, line 1 with the headings, and line 2 should exist, but not contain anything)
+- To clear the stored dataset just delete every line except the header, and make sure there is a newline after if (there should be two lines in the file, line 1 with the headings, and line 2 should exist, but not contain anything)
