@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import flask
 from os.path import realpath, dirname
-import csv
 import lib.football as football
 
 root = realpath(dirname(__file__))
