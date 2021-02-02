@@ -87,9 +87,6 @@ def sort_matches(l):
     _ranking_dict['diff'].sort(reverse=True)
     _ranking_dict['goals'].sort(reverse=True)
 
-    print(_temp_team_storage)
-    print(_ranking_dict)
-
 
     #En loop som skal gå så mange ganger som vi har lag
     for _ in l:
