@@ -54,7 +54,6 @@ def get_matches(teams):
         _append = [team] + values
         _return.append(_append)
     
-
     return sort_matches(_return)
 
 def sort_matches(l):
@@ -88,6 +87,9 @@ def sort_matches(l):
     _ranking_dict['diff'].sort(reverse=True)
     _ranking_dict['goals'].sort(reverse=True)
 
+    print(_temp_team_storage)
+    print(_ranking_dict)
+
 
     #En loop som skal gå så mange ganger som vi har lag
     for _ in l:
@@ -103,6 +105,8 @@ def sort_matches(l):
 
                     #Fjerner poengsummen og laget fra iterables slik at vi ikke får dobbelt opp med resultater
                     _ranking_dict['points'].pop(0)
+                    _ranking_dict['diff'].pop(0)
+                    _ranking_dict['goals'].pop(0)
                     _temp_team_storage.pop(team, None)
                     break
             #Hvis denne poengsummen ikke tilhører laget så går vi til neste lag med continue
@@ -121,6 +125,7 @@ def sort_matches(l):
                     #Fjerner verdier og lag fra iterables slik at vi ikke får dobbelt opp med resultater
                     _ranking_dict['diff'].pop(0)
                     _ranking_dict['points'].pop(0)
+                    _ranking_dict['goals'].pop(0)
                     _temp_team_storage.pop(team, None)
                     break
             #Hvis denne måldifferansen ikke tilhører laget så går vi til neste lag 
@@ -177,6 +182,10 @@ def save_match(teams, points):
             if (row[0] == teams[0] and row[1] == teams[1]) or (row[0] == teams[1] and row[1] == teams[0]):
                 #Returnerer en feilmelding som vises til brukeren
                 return "Denne kampen finnes allerede, og kan ikke registreres på nytt"
+    
+    #Sjekker om brukeren har valgt samme lag to ganger
+    if(teams[0]==teams[1]):
+        return "Kunne ikke lagre på grunn av lagvalg, vennligst velg to forskjellige lag til å spille mot hverandre"
     
     #Hvis kampen ikke allerede er registrert så legges den til i results.csv
     with open(f'{root}/data/results.csv', 'a') as file:

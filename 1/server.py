@@ -19,9 +19,6 @@ def home_page():
         points = [int(flask.request.form['team1-goals']), int(flask.request.form['team2-goals'])]
 
 
-        # print(teams)
-        # print(points)
-
         results = [
             [teams[0], points[0], points[0]-points[1], points[0]>points[1]],
             [teams[1], points[1], points[1]-points[0], points[1]>points[0]]
@@ -33,8 +30,9 @@ def home_page():
         if football.save_match(teams, points) != True:
             _error = football.save_match(teams, points)
             return flask.render_template('html/home.html', teams=_teams, error=_error, matches=matches)
-        matches = football.get_matches(_teams)
 
+
+        matches = football.get_matches(_teams)
         return flask.render_template('html/home.html', teams=_teams, results=results, matches=matches)
 
     else:
