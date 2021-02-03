@@ -5,9 +5,9 @@
 - Make sure you have the flask module installed on your system
 - If you don't have it you can get it with pip in a terminal/command prompt:
 ```bash
-pip install flask
+pip install Flask
 or
-pip3 install flask
+pip3 install Flask
 ```
 - Run the server.py file at the root of the project
 - Open the website that will be on http://localhost:5000
