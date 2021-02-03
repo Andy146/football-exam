@@ -2,7 +2,7 @@ import csv
 from os.path import realpath, dirname
 
 def get_matches(teams):
-    root = realpath(dirname("__main__"))
+    root = realpath(dirname(__file__))[:-4]
     _return = list()
 
     #Åpner results.csv for å hente ut alle registrerte kamper
