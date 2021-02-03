@@ -170,7 +170,7 @@ def sort_matches(l):
     return _return
 
 def save_match(teams, points):
-    root = realpath(dirname(__file__))
+    root = realpath(dirname(__file__))[:-4]
 
     #Sjekker om kampen som ble lagt inn allerede er registrert
     with open(f'{root}/data/results.csv', 'r') as file:
